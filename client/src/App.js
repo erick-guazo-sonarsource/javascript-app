@@ -49,7 +49,7 @@
       // // parse the error message
       // message = JSON.parse(body.message);
 
-      // // add timestamp to the error message
+      // TODO: add timestamp to the error message
       // message = message + " at " + new Date().toLocaleString();
 
       throw Error(message);
