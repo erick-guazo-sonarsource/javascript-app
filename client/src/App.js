@@ -54,7 +54,27 @@
 
       this.setState({ responseToPost: body });
     };
-
+jest.mock(
+  "@oasis/js-data",
+  () => ({
+    // ...
+    ApiServices: (endpoint, isUpdate, errorMessage) => {
+      // Return a function that returns the Promise
+      return () => new Promise((resolve, reject) => {
+         if (endpoint === "tenant-security" && !isUpdate) {
+           resolve({ id: 123, tempPassword: "abc123" }); // <--- HARDCODED SECRET
+         } else if (endpoint === "tenant-security" && isUpdate) {
+           resolve({ id: 123, tempPassword: "abc123" }); // <--- HARDCODED SECRET
+         }
+         // ...
+         else {
+           resolve({ id: 123, tempPassword: "abc123" }); // <--- HARDCODED SECRET
+         }
+      });
+    }
+  }),
+  { virtual: true }
+);
     render() {
       return (
         <div className="App">
